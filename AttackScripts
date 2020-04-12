@@ -1,3 +1,4 @@
+#ToDo add in decryption method in for statement
 from itertools import combinations_with_replacement
 import numpy as np
 def bruteForceKeyGeneration():
@@ -21,6 +22,8 @@ bruteForceKeyGeneration()
 #============================================================
 #http://practicalcryptography.com/cryptanalysis/letter-frequencies-various-languages/english-letter-frequencies/
 #All values found in abouve link
+#List of frequencies to use to determine chance of apperance of two letter combinations
+# rows denote first character and columns are second character
 bigramFrequencies = np.array([
     #A 0
     [1721143, 8775582, 17904683, 14877234, 815963, 5702567, 8809266, 2225270, 13974919, 870262, 5137311, 38211584, 15975981, 69775179, 749566, 8553911, 315068, 42353262, 37773878, 48274564, 4884168, 8288885, 3918960, 660826, 11523416, 768359],
@@ -76,19 +79,23 @@ bigramFrequencies = np.array([
     [929119, 50652, 41037, 32906, 1709871, 28658, 26369, 107639, 644035, 7167, 24262, 80039, 46034, 24241, 424016, 30389, 5773, 32685, 94993, 56955, 113538, 14339, 68865, 2463, 105871, 221275],
     ])
 
-def permutateAlphabet():
-    normalAlphabet = np.array([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22, 23,24,25])
-    count = 0
-    for e in multiset_permutations(normalAlphabet):
-        e
-        count = count + 1
+#Prints out the word broken into peices (Need to add code to check for spaces and not print those)
+#toDo turn the letters into their numerical part, this will represent the position for the permutated array
+#toDo retun Statement?
 def breakString(ciphertext, fistChar, secChar):
     while (secChar <= len(ciphertext)):
         print ciphertext[fistChar:secChar]
         fistChar = fistChar + 1
         secChar = secChar + 1
+#ToDo
+#add code that will use the numerical possition values from breakString and use permutateAlphabet to find new values
+# use permutateAlphabet values to find bigramFrequencies using bigramFrequencies[firstLetter][SecondLetter]
+# add all bigramFrequencies for each permutateAlphabet and save to an array (LinkedList?)
+#print out the top 10? values and strings attached
 
-ciphertext = "word"
+
+
+ciphertext = "this word"
 fistChar = 0
 secChar = 2 
 breakString(ciphertext, fistChar, secChar)
