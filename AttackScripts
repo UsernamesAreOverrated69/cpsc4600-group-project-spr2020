@@ -1,24 +1,79 @@
 #ToDo add in decryption method in for statement
+import string
 from itertools import combinations_with_replacement
 import numpy as np
+saveKeyHere = np.empty((3,3), dtype=int)
 def bruteForceKeyGeneration():
     count = 0
-    test = np.array([[0,0,0],[0,0,0],[0,1,1]])
+    test = np.array([[0,0,0],[0,0,0],[0,0,1]])
     x = np.empty((3,3), dtype=int)
     for comb in combinations_with_replacement(range(27),9):
         x.flat[:] = comb
         count = count +1
-        if (np.array_equal(x,test)):
-            print x
-            print test
-            print count
-            break
-    print 'done'
+        #print x
+        decrypt(x, "what will happen")
+    return saveKeyHere
+def charIndex(char):
+    return string.printable.index(char)
+def indexChar(index):
+    return string.printable[index]
+
+
+def decrypt(key,msg):
+    temp = np.zeros((3,1), dtype=np.int)
+    decrypted_text = ''
+    iter = 0
+    # print("The encrypted text is: {}\n".format(msg))
+    for c in msg:
+        # print("Current symbol: ",c)
+        if iter > 2:
+            mult = np.matmul(key,temp)
+            mult[0][0] = mult[0][0] % 100
+            mult[1][0] = mult[1][0] % 100
+            mult[2][0] = mult[2][0] % 100
+            # print("0,0: {}\n1,0: {}\n2,0: {}\nData types: {}, {}, {}".format(mult[0][0],mult[1][0],mult[2][0],type(mult[0][0]),type(mult[1][0]),type(mult[2][0])))
+            decrypted_text += indexChar(mult[0][0])
+            decrypted_text += indexChar(mult[1][0])
+            decrypted_text += indexChar(mult[2][0])
+            iter = 0
+        temp[iter][0] = charIndex(c)
+        # print("Index of {} is {}.".format(c,charIndex(c)))
+        iter += 1
+    if iter > 0: #Exited loop with partially or fully filled block of three values.
+        if iter == 1:
+            #single value in temp
+            # print("Before mult: {}".format(temp[0][0]))
+            mult = np.matmul(key,temp)
+            # print("After mult & before mod: {}".format(mult[0][0]))
+            mult[0][0] = mult[0][0] % 100
+            # print("After mult & mod: {}".format(mult[0][0]))
+            decrypted_text += indexChar(mult[0][0])
+        elif iter == 2:
+            #two values in temp
+            mult = np.matmul(key,temp)
+            mult[0][0] = mult[0][0] % 100
+            mult[1][0] = mult[1][0] % 100
+            decrypted_text += indexChar(mult[0][0])
+            decrypted_text += indexChar(mult[1][0])
+        elif iter == 3:
+            mult = np.matmul(key,temp)
+            mult[0][0] = mult[0][0] % 100
+            mult[1][0] = mult[1][0] % 100
+            mult[2][0] = mult[2][0] % 100
+            decrypted_text += indexChar(mult[0][0])
+            decrypted_text += indexChar(mult[1][0])
+            decrypted_text += indexChar(mult[2][0])
+        else:
+            print("Something went wrong in the decryption function.")
+    return decrypted_text
 bruteForceKeyGeneration()
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import sys
 from itertools import permutations
 from sympy.utilities.iterables import multiset_permutations
+from numpy.lib import recfunctions as rfn
 #http://practicalcryptography.com/cryptanalysis/letter-frequencies-various-languages/english-letter-frequencies/
 #All values found in abouve link
 bigramFrequencies = np.array([
@@ -88,7 +143,8 @@ def permutateAlphabet():
 #Tester for permutateAlphabet() for quicker run times
 def randompermutateAlphabet():
     return np.random.permutation(26)
-
+realPlaintext = ''
+saveBigSum = 0
 def breakString(ciphertext, fistChar, secChar):
     val1 = 0
     val2 = 0
@@ -100,6 +156,7 @@ def breakString(ciphertext, fistChar, secChar):
     plaintext = ''
     newChar = ''
     newCharVal = 0
+    newCount = 0
     while (secChar <= len(ciphertext)):
         r1 = rA[val1]
         r2 = rA[val2]
@@ -327,6 +384,8 @@ def breakString(ciphertext, fistChar, secChar):
     print(plaintext[:len(ciphertext)])
     realPlaintext = plaintext[:len(ciphertext)]
     print bigSum
+    saveBigSum = bigSum
+    
     
 #TODO
 #Add storge place for bigSum and realPlaintext
@@ -335,8 +394,7 @@ def breakString(ciphertext, fistChar, secChar):
 ciphertext = "this word"
 fistChar = 0
 secChar = 2 
-
-j = 1
+j = 0
 while (j <= 10):
     breakString(ciphertext, fistChar, secChar)
     j = j + 1
