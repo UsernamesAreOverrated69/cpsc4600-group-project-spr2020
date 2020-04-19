@@ -65,6 +65,7 @@ def decrypt(key,msg):
             decrypted_text += indexChar(mult[2][0])
         else:
             print("Something went wrong in the decryption function.")
+    print decrypted_text
     return decrypted_text
 bruteForceKeyGeneration()
 
