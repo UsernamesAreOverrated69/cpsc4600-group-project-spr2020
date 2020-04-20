@@ -395,10 +395,9 @@ def breakString(ciphertext, fistChar, secChar):
 ciphertext = "this word"
 fistChar = 0
 secChar = 2 
-j = 0
 while (j <= 10):
-    breakString(ciphertext, fistChar, secChar)
-    j = j + 1
+breakString(ciphertext, fistChar, secChar)
+
 
 
 
