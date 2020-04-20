@@ -11,6 +11,7 @@ def bruteForceKeyGeneration():
         x.flat[:] = comb
         count = count +1
         #print x
+        #plesase enter message bellow
         decrypt(x, "what will happen")
     return saveKeyHere
 def charIndex(char):
@@ -67,6 +68,7 @@ def decrypt(key,msg):
             print("Something went wrong in the decryption function.")
     print decrypted_text
     return decrypted_text
+#hit run when ready
 bruteForceKeyGeneration()
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -391,13 +393,13 @@ def breakString(ciphertext, fistChar, secChar):
 #TODO
 #Add storge place for bigSum and realPlaintext
 #print the highest 5? b values of bigSum with coresponding realPlaintext
-
+#Enter ciphertext below
 ciphertext = "this word"
 fistChar = 0
 secChar = 2 
 while (j <= 10):
 breakString(ciphertext, fistChar, secChar)
-
+#will print possible plain texts
 
 
 
