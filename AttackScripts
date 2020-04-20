@@ -151,7 +151,7 @@ def breakString(ciphertext, fistChar, secChar):
     val2 = 0
     val3 = 0
     bigSum = 0
-    rA = randompermutateAlphabet()
+    rA = permutateAlphabet()
     char1 = 'a'
     char2 = 'a'
     plaintext = ''
